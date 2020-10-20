@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "celib",
-  "version": "0.0.1",
+  "version": "0.1",
 
   "name": "Celib - CebbyS Library Mod",
   "description": "A Library For CebbyS Mods",
@@ -22,10 +22,6 @@
       "com.cebbys.celib.Celib"
     ]
   },
-  "mixins": [
-    "celib.mixins.json"
-  ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
