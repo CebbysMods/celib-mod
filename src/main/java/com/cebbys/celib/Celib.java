@@ -17,6 +17,7 @@ public class Celib implements ModInitializer {
             DirectoryHandler.initDirectory( CelibDirectories.LIB_DIRECTORY );
         }
         CelibLogger.log( MOD_ID, "Celib - CebbyS Library loaded !" );
+        
     }
 
     static {

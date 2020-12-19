@@ -1,10 +1,8 @@
 package com.cebbys.celib.directories;
 
-import com.cebbys.celib.Celib;
-import com.cebbys.celib.loggers.CelibLogger;
-import net.fabricmc.loader.api.FabricLoader;
-
 import java.nio.file.Path;
+
+import net.fabricmc.loader.api.FabricLoader;
 
 public class CelibDirectories {
 
