@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
   "id": "celib",
-  "version": "0.1",
+  "version": "0.1.3",
 
   "name": "Celib - CebbyS Library Mod",
-  "description": "A Library For CebbyS Mods",
+  "description": "Library For CebbyS Mods",
   "authors": [
     "CebbyS"
   ],
   "contact": {
-    "homepage": "https://github.com/CebbysMods/celib-mod",
+    "homepage": "https://github.com/CebbysMods",
     "sources": "https://github.com/CebbysMods/celib-mod"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/celib/icon.png",
 
   "environment": "*",
