@@ -5,12 +5,12 @@ import java.nio.file.Path;
 
 public class DirectoryHandler {
 
-    public static void initDirectory( Path directory ) {
-        directory.toFile().mkdirs();
+    public static boolean initDirectory( Path directory ) {
+        return directory.toFile().mkdirs();
     }
 
     public static Path appendToPath( Path path, String appendable ) {
-        return ( new File( String.format( "%s\\%s", path, appendable ) ) ).toPath();
+        return ( new File( path + "\\" + appendable ) ).toPath();
     }
 
 }

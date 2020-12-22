@@ -1,25 +1,20 @@
 package com.cebbys.celib.utilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CelibArrays {
 
 	public static <T> ArrayList<T> getArrayList(T[] array) {
-		ArrayList<T> list = new ArrayList<T>();
-		for (T i : array) {
-			list.add(i);
-		}
-		return list;
+		return (ArrayList<T>) Arrays.asList(array);
 	}
 	
 	public static <T extends Enum<?>> ArrayList<T> getArrayList(Class<T> e) {
 		return getArrayList(e.getEnumConstants());
-		
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T[] getArray(ArrayList<T> list) {
-		@SuppressWarnings("unchecked")
-		T[] array = (T[]) new Object[list.size()];
-		return list.toArray(array);
+		return (T[]) list.toArray();
 	}
 }
