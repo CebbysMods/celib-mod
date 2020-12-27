@@ -36,4 +36,12 @@ public class CelibBlockPos extends BlockPos {
     { return new Vec3d( getX(), getY(), getZ() ); }
     public Vec3i toVec3i()
     { return new Vec3i( getX(), getY(), getZ() ); }
+
+    public static CelibBlockPos ofVec3d(Vec3d vec) {
+        return new CelibBlockPos(vec.x, vec.y, vec.z);
+    }
+
+    public static CelibBlockPos ofVec3i(Vec3d vec) {
+        return new CelibBlockPos(vec.x, vec.y, vec.z);
+    }
 }
