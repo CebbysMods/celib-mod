@@ -24,10 +24,46 @@ public class CelibBlockPos extends BlockPos {
 
         return this;
     }
+    public BlockPos add( Vec3d p ) {
+        setX((int) (getX() + p.x));
+        setX((int) (getY() + p.y));
+        setX((int) (getZ() + p.z));
+
+        return this;
+    }
+
     public BlockPos sub( BlockPos p ) {
         setX(getX() - p.getX());
         setY(getY() - p.getY());
         setZ(getZ() - p.getZ());
+
+        return this;
+    }
+    public BlockPos sub( Vec3d p ) {
+        setX((int) (getX() - p.x));
+        setX((int) (getY() - p.y));
+        setX((int) (getZ() - p.z));
+
+        return this;
+    }
+    public BlockPos sub( Vec3i p ) {
+        setX(getX() - p.getX());
+        setX(getY() - p.getY());
+        setX(getZ() - p.getZ());
+
+        return this;
+    }
+    public BlockPos sub( int x, int y, int z ) {
+        setX(getX() - x);
+        setX(getY() - y);
+        setX(getZ() - z);
+
+        return this;
+    }
+    public BlockPos sub( double x, double y, double z ) {
+        setX((int) (getX() - x));
+        setX((int) (getY() - y));
+        setX((int) (getZ() - z));
 
         return this;
     }
