@@ -9,6 +9,9 @@ import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+
 public class Celib implements ModInitializer {
     public static final String MOD_ID;
     public static final Tag<Block> CLIMBABLE = TagRegistry.block(new Identifier("celib", "climbable"));
@@ -21,7 +24,6 @@ public class Celib implements ModInitializer {
             DirectoryHandler.initDirectory( CelibDirectories.LIB_DIRECTORY );
         }
         CelibLogger.log( MOD_ID, "Celib - CebbyS Library loaded !" );
-        
     }
 
     static {
