@@ -4,10 +4,14 @@ import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 
 public class Celib implements ModInitializer {
-
     public static final String MOD_ID;
+    public static final Tag<Block> CLIMBABLE = TagRegistry.block(new Identifier("celib", "climbable"));
 
     @Override
     public void onInitialize() {
