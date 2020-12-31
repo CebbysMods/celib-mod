@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "plugin": "com.cebbys.celib.CoreModUtil.Plugin",
   "mixins": [
+    "mixin.BucketItemMixin",
     "mixin.LivingEntityMixin"
   ],
   "injectors": {
