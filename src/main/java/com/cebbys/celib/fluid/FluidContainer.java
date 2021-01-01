@@ -91,7 +91,7 @@ public interface FluidContainer {
      */
     default int tryPartialExtractFluid(Direction fromSide, Fluid fluid, int maxAmount, ActionType interaction) {
         int remainingFluid = getCurrentSingleFluidFill(fromSide, fluid);
-        int amount = maxAmount <= remainingFluid ? maxAmount : remainingFluid;
+        int amount = Math.min(maxAmount, remainingFluid);
         if (canExtractFluid(fromSide, fluid, amount)) {
             if (interaction == ActionType.PERFORM) extractFluid(fromSide, fluid, amount);
             return amount;
