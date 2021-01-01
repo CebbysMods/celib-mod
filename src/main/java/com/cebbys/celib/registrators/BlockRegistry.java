@@ -12,7 +12,7 @@ public class BlockRegistry {
     public static void registerBlock( Block block, String modId, String blockId ) {
         Registry.register(
             Registry.BLOCK,
-            new Identifier( modId, blockId + "_block" ),
+            new Identifier( modId, blockId ),
             block
         );
     }
