@@ -6,24 +6,30 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
 public class BlockRegistry {
 
-    public static void registerBlock(Block block, String modId, String blockId) {
+    public static Block registerBlock(Block block, String modId, String blockId) {
         Registry.register(
                 Registry.BLOCK,
                 new Identifier(modId, blockId),
                 block
         );
+
+        return block;
     }
 
-    public static void registerBlockWithItem(Block block, String modId, String blockId, Item.Settings itemSettings) {
+    public static Pair<Block, Item> registerBlockWithItem(Block block, String modId, String blockId, Item.Settings itemSettings) {
         registerBlock(block, modId, blockId);
-        Registry.register(
-                Registry.ITEM,
-                new Identifier(modId, blockId),
-                new BlockItem(block, itemSettings)
+        return new Pair<>(
+                block,
+                Registry.register(
+                        Registry.ITEM,
+                        new Identifier(modId, blockId),
+                        new BlockItem(block, itemSettings)
+                )
         );
     }
 

@@ -3,14 +3,19 @@ package com.cebbys.celib;
 import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
+import com.cebbys.celib.registrators.BlockRegistry;
+import com.cebbys.celib.testing.TestMain;
+import com.cebbys.celib.testing.blocks.DmNTestBlock;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.item.BucketItem;
+import net.minecraft.item.*;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
@@ -29,6 +34,8 @@ public class Celib implements ModInitializer {
             DirectoryHandler.initDirectory(CelibDirectories.LIB_DIRECTORY);
         }
         CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
+        // Testing init
+        TestMain.init();
     }
 
     static {

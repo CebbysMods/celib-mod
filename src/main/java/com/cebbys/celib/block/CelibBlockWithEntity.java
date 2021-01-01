@@ -1,4 +1,4 @@
-package com.cebbys.celib.blocks;
+package com.cebbys.celib.block;
 
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
