@@ -10,9 +10,12 @@ import java.io.FileReader;
 
 public class JsonLoader {
 
-    public static JsonElement loadJson(File file ) {
-        try { return ( new JsonParser() ).parse( new FileReader( file ) ); }
-        catch ( JsonSyntaxException | FileNotFoundException e ) { return null; }
+    public static JsonElement loadJson(File file) {
+        try {
+            return (new JsonParser()).parse(new FileReader(file));
+        } catch (JsonSyntaxException | FileNotFoundException e) {
+            return null;
+        }
     }
 
 }
