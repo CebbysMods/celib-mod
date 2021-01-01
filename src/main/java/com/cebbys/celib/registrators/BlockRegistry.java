@@ -10,30 +10,30 @@ import net.minecraft.util.registry.Registry;
 
 public class BlockRegistry {
 
-    public static void registerBlock( Block block, String modId, String blockId ) {
+    public static void registerBlock(Block block, String modId, String blockId) {
         Registry.register(
-            Registry.BLOCK,
-            new Identifier( modId, blockId ),
-            block
+                Registry.BLOCK,
+                new Identifier(modId, blockId),
+                block
         );
     }
 
-    public static void registerBlockWithItem( Block block, String modId, String blockId, Item.Settings itemSettings ) {
-        registerBlock( block, modId, blockId );
+    public static void registerBlockWithItem(Block block, String modId, String blockId, Item.Settings itemSettings) {
+        registerBlock(block, modId, blockId);
         Registry.register(
-            Registry.ITEM,
-            new Identifier( modId, blockId ),
-            new BlockItem( block, itemSettings )
+                Registry.ITEM,
+                new Identifier(modId, blockId),
+                new BlockItem(block, itemSettings)
         );
     }
 
-    public static void registerBlockWithItem( Block block, String modId, String blockId, RenderLayer layer, Item.Settings itemSettings ) {
-        registerBlockWithItem( block, modId, blockId, itemSettings );
-        BlockRenderLayerRegistry.registerLayer( block, layer );
+    public static void registerBlockWithItem(Block block, String modId, String blockId, RenderLayer layer, Item.Settings itemSettings) {
+        registerBlockWithItem(block, modId, blockId, itemSettings);
+        BlockRenderLayerRegistry.registerLayer(block, layer);
     }
 
-    public static void registerBlock( Block block, String modId, String blockId, RenderLayer layer ) {
-        registerBlock( block, modId, blockId );
-        BlockRenderLayerRegistry.registerLayer( block, layer );
+    public static void registerBlock(Block block, String modId, String blockId, RenderLayer layer) {
+        registerBlock(block, modId, blockId);
+        BlockRenderLayerRegistry.registerLayer(block, layer);
     }
 }
