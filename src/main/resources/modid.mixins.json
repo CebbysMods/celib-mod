@@ -6,7 +6,8 @@
   "plugin": "com.cebbys.celib.CoreModUtil.Plugin",
   "mixins": [
     "mixin.BucketItemMixin",
-    "mixin.LivingEntityMixin"
+    "mixin.LivingEntityMixin",
+    "mixin.PotionItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -4,7 +4,6 @@ import com.cebbys.celib.fluid.DropletValues;
 import com.cebbys.celib.fluid.FluidInstance;
 import com.cebbys.celib.fluid.ItemWithFluid;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import org.spongepowered.asm.mixin.Mixin;
