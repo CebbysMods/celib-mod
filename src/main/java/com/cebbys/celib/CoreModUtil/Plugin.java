@@ -21,20 +21,20 @@ import java.util.Set;
 import static org.objectweb.asm.Opcodes.*;
 
 public class Plugin implements IMixinConfigPlugin {
-    static{
-        try{
+    static {
+        try {
             ClassLoader classLoader = Plugin.class.getClassLoader();
 
             // Get Class<KnotClassLoader>
             Class<?> KnotClassLoader = classLoader.getClass();
-            if(!KnotClassLoader.getName().equals("net.fabricmc.loader.launch.knot.KnotClassLoader")){
+            if (!KnotClassLoader.getName().equals("net.fabricmc.loader.launch.knot.KnotClassLoader")) {
                 throw new RuntimeException("ClassLoader was not an instance of KnotClassLoader");
             }
 
             // Get Class<KnotClassDelegate>
             Field KnotClassLoader$delegate = KnotClassLoader.getDeclaredField("delegate");
             Class<?> KnotClassDelegate = KnotClassLoader$delegate.getType();
-            if(!KnotClassDelegate.getName().equals("net.fabricmc.loader.launch.knot.KnotClassDelegate")){
+            if (!KnotClassDelegate.getName().equals("net.fabricmc.loader.launch.knot.KnotClassDelegate")) {
                 throw new RuntimeException("KnotClassLoader.delegate is not an instance of KnotClassDelegate");
             }
 
@@ -45,12 +45,12 @@ public class Plugin implements IMixinConfigPlugin {
             // Get mixinTransformer
             Field KnotClassDelegate$mixinTransformer = KnotClassDelegate.getDeclaredField("mixinTransformer");
             KnotClassDelegate$mixinTransformer.setAccessible(true);
-            FabricMixinTransformerProxy mixinTransformer = (FabricMixinTransformerProxy)KnotClassDelegate$mixinTransformer.get(delegate);
+            FabricMixinTransformerProxy mixinTransformer = (FabricMixinTransformerProxy) KnotClassDelegate$mixinTransformer.get(delegate);
 
             // Get Class<MixinTransformer>
             Field FabricMixinTransformerProxy$transformer = FabricMixinTransformerProxy.class.getDeclaredField("transformer");
             Class<?> MixinTransformer = FabricMixinTransformerProxy$transformer.getType();
-            if(!MixinTransformer.getName().equals("org.spongepowered.asm.mixin.transformer.MixinTransformer")){
+            if (!MixinTransformer.getName().equals("org.spongepowered.asm.mixin.transformer.MixinTransformer")) {
                 throw new RuntimeException("FabricMixinTransformerProxy.transformer is not an instance of MixinTransformer");
             }
 
@@ -70,12 +70,12 @@ public class Plugin implements IMixinConfigPlugin {
 
             // Set proxy
             FabricMixinTransformerProxy$transformer.set(mixinTransformer, proxy);
-        }catch(IllegalArgumentException | ReflectiveOperationException t){
+        } catch (IllegalArgumentException | ReflectiveOperationException t) {
             throw new RuntimeException("Something went wrong setting up the transformer", t);
         }
     }
 
-    private static byte[] generateProxyClass(){
+    private static byte[] generateProxyClass() {
         ClassWriter classWriter = new ClassWriter(0);
 
         classWriter.visit(
@@ -103,7 +103,7 @@ public class Plugin implements IMixinConfigPlugin {
                 null
         );
         method.visitCode();
-        try{
+        try {
             Label start = new Label();
             method.visitLabel(start);
             method.visitVarInsn(ALOAD, 0);
@@ -145,7 +145,7 @@ public class Plugin implements IMixinConfigPlugin {
             );
 
             method.visitMaxs(2, 2);
-        }finally{
+        } finally {
             method.visitEnd();
         }
 
@@ -157,7 +157,7 @@ public class Plugin implements IMixinConfigPlugin {
                 null
         );
         method.visitCode();
-        try{
+        try {
             // access flags 0x1
             Label start = new Label();
             method.visitLabel(start);
@@ -243,45 +243,47 @@ public class Plugin implements IMixinConfigPlugin {
         return classWriter.toByteArray();
     }
 
-    private static Unsafe getUnsafe(){
-        try{
+    private static Unsafe getUnsafe() {
+        try {
             Field Unsafe$theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
             Unsafe$theUnsafe.setAccessible(true);
-            return (Unsafe)Unsafe$theUnsafe.get(null);
-        }catch(ReflectiveOperationException e){
+            return (Unsafe) Unsafe$theUnsafe.get(null);
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Failed to get Unsafe instance", e);
         }
     }
 
     @Override
-    public void onLoad(String mixinPackage){}
+    public void onLoad(String mixinPackage) {
+    }
 
     @Override
-    public String getRefMapperConfig(){
+    public String getRefMapperConfig() {
         return null;
     }
 
     @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName){
+    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         return false;
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets){}
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    }
 
     @Override
-    public List<String> getMixins(){
-        for(ModContainer mod : FabricLoader.getInstance().getAllMods()){
+    public List<String> getMixins() {
+        for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
             ModMetadata metadata = mod.getMetadata();
-            if(metadata.containsCustomValue("gud_fcm")){
-                for(CustomValue value : metadata.getCustomValue("gud_fcm").getAsArray()){
-                    try{
+            if (metadata.containsCustomValue("gud_fcm")) {
+                for (CustomValue value : metadata.getCustomValue("gud_fcm").getAsArray()) {
+                    try {
                         Constructor<? extends IClassTransformer> transformer = Class.forName(value.getAsString())
                                 .asSubclass(IClassTransformer.class)
                                 .getDeclaredConstructor();
                         transformer.setAccessible(true);
                         Transformer.registerTransformer(transformer.newInstance());
-                    }catch(ReflectiveOperationException e){
+                    } catch (ReflectiveOperationException e) {
                         throw new RuntimeException(String.format(
                                 "Failed to load transformer %s from %s",
                                 value.getAsString(),
@@ -295,8 +297,10 @@ public class Plugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo){}
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo){}
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
 }

@@ -23,12 +23,12 @@ public class Celib implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CelibLogger.log( MOD_ID, "Loading Celib - CebbyS Library !" );
-        if( ! CelibDirectories.LIB_DIRECTORY.toFile().exists() ) {
-            CelibLogger.log( MOD_ID, "Creating `celib` directory in game directory !" );
-            DirectoryHandler.initDirectory( CelibDirectories.LIB_DIRECTORY );
+        CelibLogger.log(MOD_ID, "Loading Celib - CebbyS Library !");
+        if (!CelibDirectories.LIB_DIRECTORY.toFile().exists()) {
+            CelibLogger.log(MOD_ID, "Creating `celib` directory in game directory !");
+            DirectoryHandler.initDirectory(CelibDirectories.LIB_DIRECTORY);
         }
-        CelibLogger.log( MOD_ID, "Celib - CebbyS Library loaded !" );
+        CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
     }
 
     static {
