@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "com.cebbys.celib.Celib"
+    ],
+    "client": [
+      "com.cebbys.celib.CelibClient"
     ]
   },
   "depends": {
