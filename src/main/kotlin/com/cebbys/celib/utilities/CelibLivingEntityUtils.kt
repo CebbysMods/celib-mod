@@ -13,41 +13,58 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import java.lang.reflect.Field
+import java.lang.reflect.Method
 import java.util.*
 
 class CelibLivingEntityUtils(val entity: LivingEntity) {
-    fun setSPRINTING_SPEED_BOOST_ID(uuid: UUID) =
-        putObject("SPRINTING_SPEED_BOOST_ID", uuid)
-    fun setSOUL_SPEED_BOOST_ID(uuid: UUID) =
-        putObject("SOUL_SPEED_BOOST_ID", uuid)
-    fun setSPRINTING_SPEED_BOOST(eam: EntityAttributeModifier) =
-        putObject("SPRINTING_SPEED_BOOST", eam)
-    fun setLIVING_FLAGS(livingFlags: TrackedData<Byte>) =
-        putObject("LIVING_FLAGS", livingFlags)
-    fun setHEALTH(health: TrackedData<Float>) =
-        putObject("HEALTH", health)
-    fun setPOTION_SWIRLS_COLOR(psc: TrackedData<Int>) =
-        putObject("POTION_SWIRLS_COLOR", psc)
-    fun setPOTION_SWIRLS_AMBIENT(psa: TrackedData<Boolean>) =
-        putObject("POTION_SWIRLS_AMBIENT", psa)
-    fun setSTUCK_ARROW_COUNT(sac: TrackedData<Int>) =
-        putObject("STUCK_ARROW_COUNT", sac)
-    fun setSTINGER_COUNT(sc: TrackedData<Int>) =
-        putObject("STINGER_COUNT", sc)
-    fun setSLEEPING_POSITION(sp: TrackedData<Optional<BlockPos>>) =
-        putObject("SLEEPING_POSITION", sp)
-    fun setSLEEPING_DIMENSIONS(sd: EntityDimensions) =
-        putObject("SLEEPING_DIMENSIONS", sd)
-    fun setAttributes(attributes: AttributeContainer) =
-        putObject("attributes", attributes)
-    fun setDamageTracker(tracker: DamageTracker) =
-        putObject("damageTracker", tracker)
-    fun setActiveStatusEffects(ase: Map<StatusEffect, StatusEffectInstance>) =
-        putObject("activeStatusEffects", ase)
-    fun setEquippedHand(eh: DefaultedList<ItemStack>) =
-        putObject("equippedHand", eh)
-    fun setEquippedArmor(ar: DefaultedList<ItemStack>) =
-        putObject("equippedArmor", ar)
+    var SPRINTING_SPEED_BOOST_ID
+        set(uuid) = putObject("SPRINTING_SPEED_BOOST_ID", uuid)
+        get() = getValue("SPRINTING_SPEED_BOOST_ID") as UUID
+    var SOUL_SPEED_BOOST_ID
+        set(uuid) = putObject("SOUL_SPEED_BOOST_ID", uuid)
+        get() = getValue("SOUL_SPEED_BOOST_ID") as UUID
+    var SPRINTING_SPEED_BOOST
+        set(eam) = putObject("SPRINTING_SPEED_BOOST", eam)
+        get() = getValue("SPRINTING_SPEED_BOOST") as EntityAttributeModifier
+    var LIVING_FLAGS: TrackedData<Byte>
+        set(livingFlags) = putObject("LIVING_FLAGS", livingFlags)
+        get() = throwCast(getValue("LIVING_FLAGS"))
+    var HEALTH: TrackedData<Float>
+        set(health) = putObject("HEALTH", health)
+        get() = throwCast(getValue("HEALTH"))
+    var POTION_SWIRLS_COLOR: TrackedData<Int>
+        set(psc) = putObject("POTION_SWIRLS_COLOR", psc)
+        get() = throwCast(getValue("POTION_SWIRLS_COLOR"))
+    var POTION_SWIRLS_AMBIENT: TrackedData<Boolean>
+        set(psa) = putObject("POTION_SWIRLS_AMBIENT", psa)
+        get() = throwCast(getValue("POTION_SWIRLS_AMBIENT"))
+    var STUCK_ARROW_COUNT: TrackedData<Int>
+        set(sac) = putObject("STUCK_ARROW_COUNT", sac)
+        get() = throwCast(getValue("STUCK_ARROW_COUNT"))
+    var STINGER_COUNT: TrackedData<Int>
+        set(sc) = putObject("STINGER_COUNT", sc)
+        get() = throwCast(getValue("STINGER_COUNT"))
+    var SLEEPING_POSITION: TrackedData<Optional<BlockPos>>
+        set(sp) = putObject("SLEEPING_POSITION", sp)
+        get() = throwCast(getValue("SLEEPING_POSITION"))
+    var SLEEPING_DIMENSIONS: EntityDimensions
+        set(sd) = putObject("SLEEPING_DIMENSIONS", sd)
+        get() = getValue("SLEEPING_DIMENSIONS") as EntityDimensions
+    var attributes: AttributeContainer
+        set(attributes) = putObject("attributes", attributes)
+        get() = getValue("attributes") as AttributeContainer
+    var damageTracker: DamageTracker
+        set(tracker) = putObject("damageTracker", tracker)
+        get() = getValue("damageTracker") as DamageTracker
+    var activeStatusEffects: Map<StatusEffect, StatusEffectInstance>
+        set(ase) = putObject("activeStatusEffects", ase)
+        get() = throwCast(getValue("activeStatusEffects"))
+    var equippedHand: DefaultedList<ItemStack>
+        set(eh) = putObject("equippedHand", eh)
+        get() = throwCast(getValue("equippedHand"))
+    var equippedArmor: DefaultedList<ItemStack>
+        set(ar) = putObject("equippedArmor", ar)
+        get() = throwCast(getValue("equippedArmor"))
 
     inline fun getDeclaredField(name: String): Field = LivingEntity::class.java.getDeclaredField(name)
     inline fun getObjectFieldOffset(field: Field) = Celib.unsafe.objectFieldOffset(field)
@@ -56,4 +73,9 @@ class CelibLivingEntityUtils(val entity: LivingEntity) {
         getObjectFieldOffset(getDeclaredField(name)),
         obj
     )
+    inline fun getValue(name: String): Any? = FastReflection.create(getDeclaredField(name)).get(entity)
+
+    operator fun get(key: String): Any? = getValue(key)
+    operator fun set(key: String, value: Any?) = putObject(key, value)
+    operator fun invoke(target: String): Any? = FastReflection.create(LivingEntity::class.java.getDeclaredMethod(target)).invoke(entity)
 }
