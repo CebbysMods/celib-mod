@@ -1,6 +1,7 @@
 package com.cebbys.celib.utilities
 
 import com.cebbys.celib.Celib
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityDimensions
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.attribute.AttributeContainer
@@ -16,7 +17,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.*
 
-class CelibLivingEntityUtils(val entity: LivingEntity) {
+open class CelibLivingEntityUtils(override val entity: LivingEntity): CelibEntityUtils(entity) {
     var SPRINTING_SPEED_BOOST_ID
         set(uuid) = putObject("SPRINTING_SPEED_BOOST_ID", uuid)
         get() = getValue("SPRINTING_SPEED_BOOST_ID") as UUID
@@ -66,16 +67,25 @@ class CelibLivingEntityUtils(val entity: LivingEntity) {
         set(ar) = putObject("equippedArmor", ar)
         get() = throwCast(getValue("equippedArmor"))
 
-    inline fun getDeclaredField(name: String): Field = LivingEntity::class.java.getDeclaredField(name)
-    inline fun getObjectFieldOffset(field: Field) = Celib.unsafe.objectFieldOffset(field)
-    inline fun putObject(name: String, obj: Any?) = Celib.unsafe.putObject(
-        entity,
-        getObjectFieldOffset(getDeclaredField(name)),
-        obj
-    )
-    inline fun getValue(name: String): Any? = FastReflection.create(getDeclaredField(name)).get(entity)
+    companion object {
+        inline fun getDeclaredField(name: String): Field =
+            LivingEntity::class.java.getDeclaredField(name)
+        inline fun getObjectFieldOffset(field: Field) =
+            Celib.unsafe.objectFieldOffset(field)
+        inline fun putObject(entity: LivingEntity, name: String, obj: Any?) =
+            Celib.unsafe.putObject(
+                entity,
+                getObjectFieldOffset(getDeclaredField(name)),
+                obj)
+        inline fun getValue(entity: LivingEntity, name: String): Any? =
+            FastReflection.create(
+                getDeclaredField(name))
+                .get(entity)
+    }
+    override fun getValue(name: String) = getValue(entity, name)
+    override fun putObject(name: String, obj: Any?) = putObject(entity, name, obj)
 
-    operator fun get(key: String): Any? = getValue(key)
-    operator fun set(key: String, value: Any?) = putObject(key, value)
-    operator fun invoke(target: String): Any? = FastReflection.create(LivingEntity::class.java.getDeclaredMethod(target)).invoke(entity)
+    override operator fun get(key: String): Any? = getValue(key)
+    override operator fun set(key: String, value: Any?) = putObject(key, value)
+    override operator fun invoke(target: String, vararg args: Any?): Any? = FastReflection.create(LivingEntity::class.java.getDeclaredMethod(target)).invoke(entity, args)
 }
