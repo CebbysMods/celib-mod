@@ -16,18 +16,47 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 open class CelibEntityUtils(open val entity: Entity) {
-    var LOGGER
-        set(logger) = putObject("LOGGER", logger)
-        get() = get("LOGGER") as Logger
-    var MAX_ENTITY_ID
-        set(mei) = putObject("MAX_ENTITY_ID", mei)
-        get() = get("MAX_ENTITY_ID") as AtomicInteger
-    var EMPTY_STACK_LIST: List<ItemStack>
-        set(esl) = putObject("EMPTY_STACK_LIST", esl)
-        get() = throwCast(getValue("EMPTY_STACK_LIST"))
-    var NULL_BOX
-        set(nb) = putObject("NULL_BOX", nb)
-        get() = getValue("NULL_BOX") as Box
+    companion object {
+        var LOGGER
+            set(logger) = putObject("LOGGER", logger)
+            get() = getValue("LOGGER") as Logger
+        var MAX_ENTITY_ID
+            set(mei) = putObject("MAX_ENTITY_ID", mei)
+            get() = getValue("MAX_ENTITY_ID") as AtomicInteger
+        var EMPTY_STACK_LIST: List<ItemStack>
+            set(esl) = putObject("EMPTY_STACK_LIST", esl)
+            get() = throwCast(getValue("EMPTY_STACK_LIST"))
+        var NULL_BOX
+            set(nb) = putObject("NULL_BOX", nb)
+            get() = getValue("NULL_BOX") as Box
+        var renderDistanceMultiplier
+            set(rdm) = putObject("renderDistanceMultiplier", rdm)
+            get() = getValue("renderDistanceMultiplier") as Double
+
+        inline fun getDeclaredField(name: String): Field =
+            Entity::class.java.getDeclaredField(name)
+        inline fun getObjectFieldOffset(field: Field) =
+            Celib.unsafe.objectFieldOffset(field)
+        inline fun putObject(entity: Entity, name: String, obj: Any?) =
+            Celib.unsafe.putObject(
+                entity,
+                getObjectFieldOffset(getDeclaredField(name)),
+                obj)
+        inline fun getValue(entity: Entity, name: String): Any? =
+            FastReflection.create(
+                getDeclaredField(name)
+            ).get(entity)
+
+        inline fun putObject(name: String, obj: Any?) =
+            Celib.unsafe.putObject(
+                Entity::class.java,
+                getObjectFieldOffset(getDeclaredField(name)),
+                obj)
+        inline fun getValue(name: String): Any? =
+            FastReflection.create(
+                getDeclaredField(name)
+            ).get(null)
+    }
     var type: EntityType<*>
         set(type) = putObject("type", type)
         get() = throwCast(getValue("type"))
@@ -68,28 +97,11 @@ open class CelibEntityUtils(open val entity: Entity) {
         set(pmd) = putObject("pistonMovementDelta", pmd)
         get() = getValue("pistonMovementDelta") as DoubleArray
 
-    // Reflection
-    companion object {
-        inline fun getDeclaredField(name: String): Field =
-            LivingEntity::class.java.getDeclaredField(name)
-        inline fun getObjectFieldOffset(field: Field) =
-            Celib.unsafe.objectFieldOffset(field)
-        inline fun putObject(entity: Entity, name: String, obj: Any?) =
-            Celib.unsafe.putObject(
-                entity,
-                getObjectFieldOffset(getDeclaredField(name)),
-                obj)
-        inline fun getValue(entity: Entity, name: String): Any? =
-            FastReflection.create(
-                getDeclaredField(name)
-            )
-                .get(entity)
-    }
     open fun getValue(name: String) = getValue(entity, name)
     open fun putObject(name: String, obj: Any?) = putObject(entity, name, obj)
 
     open operator fun get(key: String): Any? = getValue(key)
     open operator fun set(key: String, value: Any?) = putObject(key, value)
-    open operator fun invoke(target: String, vararg args: Any?): Any? = FastReflection.create(LivingEntity::class.java.getDeclaredMethod(target)).invoke(entity, args)
+    open operator fun invoke(target: String, vararg args: Any?): Any? = FastReflection.create(Entity::class.java.getDeclaredMethod(target)).invoke(entity, args)
 
 }

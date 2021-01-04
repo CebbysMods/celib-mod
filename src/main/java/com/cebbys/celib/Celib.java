@@ -14,6 +14,8 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 import sun.misc.Unsafe;
 
 public class Celib implements ModInitializer {
@@ -35,6 +37,21 @@ public class Celib implements ModInitializer {
         CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
         // Testing
         Registry.register(Registry.ITEM, new Identifier("celib", "titem"), new TItem());
+        try {
+            RegistryKey<World> nether = World.NETHER;
+            unsafe.putObject(
+                    World.class,
+                    unsafe.staticFieldOffset(World.class.getDeclaredField("NETHER")),
+                    World.END
+                    );
+            unsafe.putObject(
+                    World.class,
+                    unsafe.staticFieldOffset(World.class.getDeclaredField("END")),
+                    nether
+            );
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     static {
