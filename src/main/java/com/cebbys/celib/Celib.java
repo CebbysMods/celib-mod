@@ -3,7 +3,6 @@ package com.cebbys.celib;
 import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
-import com.cebbys.celib.testing.TItem;
 import com.cebbys.celib.utilities.CelibEntityUtils;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
@@ -37,9 +36,6 @@ public class Celib implements ModInitializer {
             DirectoryHandler.initDirectory(CelibDirectories.LIB_DIRECTORY);
         }
         CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
-        // Testing
-        Registry.register(Registry.ITEM, new Identifier("celib", "titem"), new TItem());
-        CelibEntityUtils.Companion.setRenderDistanceMultiplier(100);
     }
 
     static {
