@@ -1,14 +1,14 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.cebbys.celib",
+  "package": "com.cebbys.celib.mixin",
   "compatibilityLevel": "JAVA_8",
+  "plugin": "com.cebbys.celib.mixin.CelibPlugin",
   "mixins": [
-    "mixin.BoostrapMixin",
-    "mixin.BucketItemMixin",
-    "mixin.IEntityMixin",
-    "mixin.LivingEntityMixin",
-    "mixin.PotionItemMixin"
+    "BucketItemMixin",
+    "IEntityMixin",
+    "LivingEntityMixin",
+    "PotionItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "celib",
-  "version": "${version}",
+  "version": "${mod_version}",
 
   "name": "Celib - CebbyS Library Mod",
   "description": "Library For CebbyS Mods",
@@ -21,9 +21,6 @@
   "entrypoints": {
     "main": [
       "com.cebbys.celib.Celib"
-    ],
-    "client": [
-      "com.cebbys.celib.CelibClient"
     ]
   },
   "depends": {
@@ -33,5 +30,7 @@
   },
   "suggests": {
     "flamingo": "*"
-  }
+  },
+
+  "mixins": ["modid.mixins.json"]
 }

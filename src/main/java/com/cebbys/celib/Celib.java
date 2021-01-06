@@ -27,8 +27,6 @@ public class Celib implements ModInitializer {
     public static FieldAccessor BucketItem_fluid_field;
     // Random
     public static final Random rand = new Random(System.currentTimeMillis());
-    // Boostrap
-    public static final ArrayList<Action> boostrapInit = new ArrayList<>();
 
     @Override
     public void onInitialize() {
@@ -49,7 +47,5 @@ public class Celib implements ModInitializer {
         } catch (Throwable t) {
             CelibLogger.error("Reflection init error", t.getMessage());
         }
-        // Boostrap
-        boostrapInit.add(() -> System.out.println("UwU"));
     }
 }

@@ -34,8 +34,8 @@ public abstract class LivingEntityMixin extends Entity implements IEntityMixin {
     public LivingEntityMixin() { super(null, null); }
 
     @Inject(method = "isClimbing", at = @At(value = "RETURN", ordinal = 2), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    public void canClimb(CallbackInfoReturnable<Boolean> cir, final BlockState state, final Block block) {
-        if (Celib.CLIMBABLE.contains(block)) {
+    public void canClimb(CallbackInfoReturnable<Boolean> cir, BlockPos blockPos, BlockState blockState) {
+        if (Celib.CLIMBABLE.contains(blockState.getBlock())) {
             cir.setReturnValue(true);
         }
     }
@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityMixin {
      * @reason Optimization
      */
     @Overwrite
-    protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
+    public void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
         if (!this.touchingWater) {
             this.callCheckWaterState();
         }
@@ -79,7 +79,7 @@ public abstract class LivingEntityMixin extends Entity implements IEntityMixin {
      * @reason Optimization
      */
     @Overwrite
-    protected void addSoulSpeedBoostIfNeeded() {
+    public void addSoulSpeedBoostIfNeeded() {
         if (!this.getLandingBlockState().isAir()) {
             int i = EnchantmentHelper.getEquipmentLevel(Enchantments.SOUL_SPEED, (LivingEntity) (Object) this);
             if (i > 0 && this.isOnSoulSpeedBlock()) {
