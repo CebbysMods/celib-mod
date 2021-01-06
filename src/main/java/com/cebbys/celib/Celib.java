@@ -7,7 +7,6 @@ import com.cebbys.celib.testing.TItem;
 import com.cebbys.celib.utilities.CelibEntityUtils;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
-import com.github.mouse0w0.fastreflection.MethodAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
@@ -15,8 +14,6 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.World;
 import sun.misc.Unsafe;
 
 import java.util.Random;
