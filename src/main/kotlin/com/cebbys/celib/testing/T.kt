@@ -1,21 +1,24 @@
 package com.cebbys.celib.testing
 
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
+import com.cebbys.celib.Celib
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemUsageContext
 import net.minecraft.text.LiteralText
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
+import net.minecraft.text.Text
 
 class TItem : Item(Settings().group(ItemGroup.MISC)) {
-    override fun useOnBlock(context: ItemUsageContext?): ActionResult {
-        return ActionResult.SUCCESS
+    inline override fun getName(): Text {
+        val str = StringBuilder()
+        str.append(Celib.rand.nextInt())
+        str.append(Celib.rand.nextInt())
+        return LiteralText(str.toString())
     }
 
-    override fun useOnEntity(stack: ItemStack?, user: PlayerEntity?, entity: LivingEntity?, hand: Hand?): ActionResult {
-        return ActionResult.SUCCESS
+    inline override fun getName(stack: ItemStack?): Text {
+        val str = StringBuilder()
+        str.append(Celib.rand.nextInt())
+        str.append(Celib.rand.nextInt())
+        return LiteralText(str.toString())
     }
 }

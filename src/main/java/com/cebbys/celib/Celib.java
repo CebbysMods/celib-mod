@@ -4,6 +4,7 @@ import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
 import com.cebbys.celib.testing.TItem;
+import com.cebbys.celib.utilities.CelibEntityUtils;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
 import com.github.mouse0w0.fastreflection.MethodAccessor;
@@ -18,6 +19,8 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import sun.misc.Unsafe;
 
+import java.util.Random;
+
 public class Celib implements ModInitializer {
     public static final String MOD_ID;
     // LadderAPI
@@ -26,6 +29,8 @@ public class Celib implements ModInitializer {
     public static Unsafe unsafe = null;
     // Reflection Fields
     public static FieldAccessor BucketItem_fluid_field;
+    // Random
+    public static final Random rand = new Random(System.currentTimeMillis());
 
     @Override
     public void onInitialize() {
@@ -37,7 +42,7 @@ public class Celib implements ModInitializer {
         CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
         // Testing
         Registry.register(Registry.ITEM, new Identifier("celib", "titem"), new TItem());
-        
+        CelibEntityUtils.Companion.setRenderDistanceMultiplier(100);
     }
 
     static {

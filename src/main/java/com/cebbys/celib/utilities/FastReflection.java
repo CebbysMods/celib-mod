@@ -13,4 +13,20 @@ public class FastReflection {
     public static MethodAccessor create(Method field) throws Exception {
         return com.github.mouse0w0.fastreflection.FastReflection.create(field);
     }
+
+    public static Field getField(Class clss, String name) {
+        Field f = null;
+
+        try {
+            f = clss.getField(name);
+        } catch (Throwable ignored)
+        {
+            try {
+                f = clss.getDeclaredField(name);
+            } catch (Throwable ignored1)
+            { }
+        }
+
+        return f;
+    }
 }

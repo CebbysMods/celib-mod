@@ -3,9 +3,9 @@
   "minVersion": "0.8",
   "package": "com.cebbys.celib",
   "compatibilityLevel": "JAVA_8",
-  "plugin": "com.cebbys.celib.CoreModUtil.Plugin",
   "mixins": [
     "mixin.BucketItemMixin",
+    "mixin.IEntityMixin",
     "mixin.LivingEntityMixin",
     "mixin.PotionItemMixin"
   ],

@@ -53,29 +53,12 @@ open class CelibLivingEntityUtils(override val entity: LivingEntity): CelibEntit
             set(sd) = putObject("SLEEPING_DIMENSIONS", sd)
             get() = getValue("SLEEPING_DIMENSIONS") as EntityDimensions
 
-        inline fun getDeclaredField(name: String): Field =
-            LivingEntity::class.java.getDeclaredField(name)
-        inline fun getObjectFieldOffset(field: Field) =
-            Celib.unsafe.objectFieldOffset(field)
-        inline fun putObject(entity: LivingEntity, name: String, obj: Any?) =
-            Celib.unsafe.putObject(
-                entity,
-                getObjectFieldOffset(getDeclaredField(name)),
-                obj)
-        inline fun getValue(entity: LivingEntity, name: String): Any? =
-            FastReflection.create(
-                getDeclaredField(name))
-                .get(entity)
-
-        inline fun putObject(name: String, obj: Any?) =
-            Celib.unsafe.putObject(
-                LivingEntity::class.java,
-                getObjectFieldOffset(getDeclaredField(name)),
-                obj)
-        inline fun getValue(name: String): Any? =
-            FastReflection.create(
-                getDeclaredField(name)
-            ).get(null)
+        private fun putObject(name: String, obj: Any?) = Celib.unsafe.putObject(
+            Entity::class.java,
+            Celib.unsafe.staticFieldOffset(FastReflection.getField(Entity::class.java, name)),
+            obj
+        )
+        private fun getValue(name: String) = FastReflection.create(FastReflection.getField(Entity::class.java, name)).get(null)
     }
     var attributes: AttributeContainer
         set(attributes) = putObject("attributes", attributes)
@@ -93,10 +76,10 @@ open class CelibLivingEntityUtils(override val entity: LivingEntity): CelibEntit
         set(ar) = putObject("equippedArmor", ar)
         get() = throwCast(getValue("equippedArmor"))
 
-    override fun getValue(name: String) = getValue(entity, name)
-    override fun putObject(name: String, obj: Any?) = putObject(entity, name, obj)
-
-    override operator fun get(key: String): Any? = getValue(key)
-    override operator fun set(key: String, value: Any?) = putObject(key, value)
-    override operator fun invoke(target: String, vararg args: Any?): Any? = FastReflection.create(LivingEntity::class.java.getDeclaredMethod(target)).invoke(entity, args)
+    private fun putObject(name: String, obj: Any?) = Celib.unsafe.putObject(
+        entity,
+        Celib.unsafe.staticFieldOffset(FastReflection.getField(Entity::class.java, name)),
+        obj
+    )
+    private fun getValue(name: String) = FastReflection.create(FastReflection.getField(Entity::class.java, name)).get(entity)
 }

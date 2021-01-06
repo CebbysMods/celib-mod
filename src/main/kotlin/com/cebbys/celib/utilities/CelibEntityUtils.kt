@@ -33,30 +33,14 @@ open class CelibEntityUtils(open val entity: Entity) {
             set(rdm) = putObject("renderDistanceMultiplier", rdm)
             get() = getValue("renderDistanceMultiplier") as Double
 
-        inline fun getDeclaredField(name: String): Field =
-            Entity::class.java.getDeclaredField(name)
-        inline fun getObjectFieldOffset(field: Field) =
-            Celib.unsafe.objectFieldOffset(field)
-        inline fun putObject(entity: Entity, name: String, obj: Any?) =
-            Celib.unsafe.putObject(
-                entity,
-                getObjectFieldOffset(getDeclaredField(name)),
-                obj)
-        inline fun getValue(entity: Entity, name: String): Any? =
-            FastReflection.create(
-                getDeclaredField(name)
-            ).get(entity)
-
-        inline fun putObject(name: String, obj: Any?) =
-            Celib.unsafe.putObject(
-                Entity::class.java,
-                getObjectFieldOffset(getDeclaredField(name)),
-                obj)
-        inline fun getValue(name: String): Any? =
-            FastReflection.create(
-                getDeclaredField(name)
-            ).get(null)
+        private fun putObject(name: String, obj: Any?) = Celib.unsafe.putObject(
+            Entity::class.java,
+            Celib.unsafe.staticFieldOffset(FastReflection.getField(Entity::class.java, name)),
+            obj
+        )
+        private fun getValue(name: String) = FastReflection.create(FastReflection.getField(Entity::class.java, name)).get(null)
     }
+
     var type: EntityType<*>
         set(type) = putObject("type", type)
         get() = throwCast(getValue("type"))
@@ -97,11 +81,10 @@ open class CelibEntityUtils(open val entity: Entity) {
         set(pmd) = putObject("pistonMovementDelta", pmd)
         get() = getValue("pistonMovementDelta") as DoubleArray
 
-    open fun getValue(name: String) = getValue(entity, name)
-    open fun putObject(name: String, obj: Any?) = putObject(entity, name, obj)
-
-    open operator fun get(key: String): Any? = getValue(key)
-    open operator fun set(key: String, value: Any?) = putObject(key, value)
-    open operator fun invoke(target: String, vararg args: Any?): Any? = FastReflection.create(Entity::class.java.getDeclaredMethod(target)).invoke(entity, args)
-
+    private fun putObject(name: String, obj: Any?) = Celib.unsafe.putObject(
+        entity,
+        Celib.unsafe.staticFieldOffset(FastReflection.getField(Entity::class.java, name)),
+        obj
+    )
+    private fun getValue(name: String) = FastReflection.create(FastReflection.getField(Entity::class.java, name)).get(entity)
 }
