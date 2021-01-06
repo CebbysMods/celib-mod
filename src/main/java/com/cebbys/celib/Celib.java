@@ -3,7 +3,7 @@ package com.cebbys.celib;
 import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
-import com.cebbys.celib.utilities.CelibEntityUtils;
+import com.cebbys.celib.utilities.Action;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
 import net.fabricmc.api.ModInitializer;
@@ -12,9 +12,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BucketItem;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import sun.misc.Unsafe;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Celib implements ModInitializer {
@@ -27,6 +27,8 @@ public class Celib implements ModInitializer {
     public static FieldAccessor BucketItem_fluid_field;
     // Random
     public static final Random rand = new Random(System.currentTimeMillis());
+    // Boostrap
+    public static final ArrayList<Action> boostrapInit = new ArrayList<>();
 
     @Override
     public void onInitialize() {
@@ -47,5 +49,7 @@ public class Celib implements ModInitializer {
         } catch (Throwable t) {
             CelibLogger.error("Reflection init error", t.getMessage());
         }
+        // Boostrap
+        boostrapInit.add(() -> System.out.println("UwU"));
     }
 }

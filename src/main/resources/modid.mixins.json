@@ -4,6 +4,7 @@
   "package": "com.cebbys.celib",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "mixin.BoostrapMixin",
     "mixin.BucketItemMixin",
     "mixin.IEntityMixin",
     "mixin.LivingEntityMixin",

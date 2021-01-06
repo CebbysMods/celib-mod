@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "celib",
-  "version": "${mod_version}",
+  "version": "${version}",
 
   "name": "Celib - CebbyS Library Mod",
   "description": "Library For CebbyS Mods",
