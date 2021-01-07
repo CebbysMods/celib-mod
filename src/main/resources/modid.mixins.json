@@ -6,6 +6,7 @@
   "plugin": "com.cebbys.celib.mixin.CelibPlugin",
   "mixins": [
     "BucketItemMixin",
+    "EntityMixin",
     "IEntityMixin",
     "LivingEntityMixin",
     "PotionItemMixin"
