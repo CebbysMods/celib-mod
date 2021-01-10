@@ -30,5 +30,7 @@
   },
   "suggests": {
     "flamingo": "*"
-  }
+  },
+
+  "mixins": ["modid.mixins.json"]
 }
