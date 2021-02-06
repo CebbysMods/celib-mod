@@ -1,26 +1,30 @@
 package com.cebbys.celib;
 
+import com.cebbys.celib.bootstrap.CelibBoostrap;
 import com.cebbys.celib.directories.CelibDirectories;
 import com.cebbys.celib.directories.DirectoryHandler;
 import com.cebbys.celib.loggers.CelibLogger;
-import com.cebbys.celib.utilities.Action;
 import com.github.mouse0w0.fastreflection.FastReflection;
 import com.github.mouse0w0.fastreflection.FieldAccessor;
+import javassist.ClassPool;
+import javassist.CtClass;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.BucketItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import sun.misc.Unsafe;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Celib implements ModInitializer {
     public static final String MOD_ID;
-    // LadderAPI
-    public static final Tag<Block> CLIMBABLE = TagRegistry.block(new Identifier("celib", "climbable"));
     // Unsafe
     public static Unsafe unsafe = null;
     // Reflection Fields
@@ -35,6 +39,7 @@ public class Celib implements ModInitializer {
             CelibLogger.log(MOD_ID, "Creating `celib` directory in game directory !");
             DirectoryHandler.initDirectory(CelibDirectories.LIB_DIRECTORY);
         }
+
         CelibLogger.log(MOD_ID, "Celib - CebbyS Library loaded !");
     }
 

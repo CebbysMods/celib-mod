@@ -14,7 +14,7 @@ public class FastReflection {
         return com.github.mouse0w0.fastreflection.FastReflection.create(field);
     }
 
-    public static Field getField(Class clss, String name) {
+    public static Field getField(Class<?> clss, String name) {
         Field f = null;
 
         try {
